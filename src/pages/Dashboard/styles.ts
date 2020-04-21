@@ -111,4 +111,13 @@ export const Repositories = styled.div`
       color: #cbcbd6;
     }
   }
+
+  button {
+    display: block;
+    margin-left: auto;
+    margin-bottom: 4px;
+    background: transparent;
+    border: 0;
+    color: #a8a8a8;
+  }
 `;

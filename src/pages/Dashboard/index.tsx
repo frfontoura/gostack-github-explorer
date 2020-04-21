@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { FiChevronRight } from 'react-icons/fi';
 
@@ -51,12 +51,17 @@ const Dashboard: React.FC = () => {
     try {
       const response = await api.get<Repository>(`repos/${newRepo}`);
       const repository = response.data;
-      setRepositories([...repositories, repository]);
+      setRepositories([repository, ...repositories]);
       setNewRepo('');
       setInputError('');
     } catch {
       setInputError('Erro na busca por esse repositório');
     }
+  }
+
+  function handleClearRepositories(e: MouseEvent<HTMLButtonElement>): void {
+    e.preventDefault();
+    setRepositories([]);
   }
 
   return (
@@ -76,6 +81,12 @@ const Dashboard: React.FC = () => {
       {inputError && <Error>{inputError}</Error>}
 
       <Repositories>
+        {repositories.length > 0 && (
+          <button type="button" onClick={handleClearRepositories}>
+            Limpar
+          </button>
+        )}
+
         {repositories.map((repository) => (
           <Link
             key={repository.full_name}
